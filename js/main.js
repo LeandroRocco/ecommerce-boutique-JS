@@ -138,7 +138,8 @@ document.getElementById('edad').addEventListener('input', validaEdad);
 document.getElementById('password').addEventListener('input', validaPass);
 //document.getElementById('password').addEventListener('input', validaPass);
 
-function enviar (){
+function enviar (ev){
+    ev.preventDefault();
     const formu = {
         'nombre': nombre,
         'edad': edad,
@@ -148,5 +149,5 @@ function enviar (){
     console.log(formu);
     console.log(JSON.stringify(formu));
 }
-const formulario = document.getElementById('formulario');
-formulario.addEventListener('submit', enviar)
+const miformulario = document.getElementById('formulario');
+miformulario.addEventListener('submit', enviar);
