@@ -83,9 +83,7 @@ carrito.forEach(item => {
 document.getElementById("carrito").innerHTML = agregados;
 
 function quitardelCarrito(nombre){
-
     let borrar = document.getElementById(nombre);
-
     borrar.parentNode.removeChild(borrar);
 }
 
@@ -104,11 +102,11 @@ for (const producto of datosProducto) {
 }
 console.log(datosProducto);
 
-
-let nombre = document.getElementById('nombre').value
-let edad = document.getElementById('edad').value
-let email = document.getElementById('email').value
-let password = document.getElementById('password').value
+//implementacion jQuery
+let nombre = $('nombre').val()
+let edad = $('edad').val()
+let email = $('email').val()
+let password = $('password').val()
 
 function validaEdad(event){
     let age = event.target.value;
@@ -122,8 +120,8 @@ function validaEdad(event){
     }
 }
 
-function validaPass(e){
-    let pass = e.target.value;
+function validaPass(event){
+    let pass = event.target.value;
     if (pass.length < 6){
         console.log("Su contraseña tiene que contener como mínimo 6 caracteres");
         pass = undefined;
@@ -133,13 +131,12 @@ function validaPass(e){
         document.getElementById('password').style.border = "2px solid green";
     }
 }
+//implemetacion jQuery
+$('#edad').on('input', validaEdad);
+$('#password').on('input', validaPass);
 
-document.getElementById('edad').addEventListener('input', validaEdad);
-document.getElementById('password').addEventListener('input', validaPass);
-//document.getElementById('password').addEventListener('input', validaPass);
-
-function enviar (ev){
-    ev.preventDefault();
+function enviar(event){
+    event.preventDefault();
     const formu = {
         'nombre': nombre,
         'edad': edad,
