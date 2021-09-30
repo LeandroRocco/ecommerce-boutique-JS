@@ -103,10 +103,10 @@ for (const producto of datosProducto) {
 console.log(datosProducto);
 
 //implementacion jQuery
-let nombre = $('nombre').val()
-let edad = $('edad').val()
-let email = $('email').val()
-let password = $('password').val()
+let nombre = $('nombre').val();
+let edad = $('edad').val();
+let email = $('email').val();
+let password = $('password').val();
 
 function validaEdad(event){
     let age = event.target.value;
@@ -148,3 +148,31 @@ function enviar(event){
 }
 const miformulario = document.getElementById('formulario');
 miformulario.addEventListener('submit', enviar);
+
+//implementacion AJAX
+
+const dataMP = carrito.map(item => {
+    return {
+        "title": item.nombre,
+        "description": item.genero,
+        "picture_url": item.imagen,
+        "category_id": item.descripcion,
+        "quantity": 1,
+        "currency_id": "ARS",
+        "unit_price": item.precio,
+    }
+});
+
+const data = {
+    "items": dataMP,
+};
+
+let url = "https://api.mercadopago.com/checkout/preferences";
+fetch(url,{
+    method: 'POST',
+    headers: {
+        'Authorization': ' Bearer TEST-4692169109702316-093019-03da479ce0be2945870f3c52964852b2-25169801',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+});
