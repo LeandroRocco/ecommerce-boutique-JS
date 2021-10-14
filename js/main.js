@@ -22,9 +22,9 @@ class Producto{
 let totalSuma = 0;
 const datosProducto = [];
 
-datosProducto.push(new Producto('Ginebra', 'Sillon', 70000, 'Madera y pana', 5, '/media/sillon03.png'));
-datosProducto.push(new Producto('Pampa', 'Mesa', 35000, 'Madera y melamina', 6, '/media/mesa13.png'));
-datosProducto.push(new Producto('Florencia', 'Silla', 10000, 'Hierro y plastico', 7, '/media/silla09.png'));
+datosProducto.push(new Producto('Ginebra', 'Sillon', 70000, 'Madera y pana', 5, 'https://raw.githubusercontent.com/LeandroRocco/ecommerce-boutique-JS-Rocco/main/media/sillon03.png'));
+datosProducto.push(new Producto('Pampa', 'Mesa', 35000, 'Madera y melamina', 6, 'https://raw.githubusercontent.com/LeandroRocco/ecommerce-boutique-JS-Rocco/main/media/mesa13.png'));
+datosProducto.push(new Producto('Florencia', 'Silla', 10000, 'Hierro y plastico', 7, 'https://raw.githubusercontent.com/LeandroRocco/ecommerce-boutique-JS-Rocco/main/media/silla09.png'));
 
 localStorage.setItem("productos", JSON.stringify(datosProducto));
 
