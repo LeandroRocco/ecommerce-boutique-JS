@@ -2,7 +2,7 @@
 let carrito = [];
 if(localStorage.carrito != null){
     carrito = JSON.parse(localStorage.carrito);
-    document.getElementById('actualiza').innerHTML = carrito.length;   
+    document.getElementById('contador-carrito').innerHTML = carrito.length;   
 }
 
 class Producto{
@@ -30,23 +30,25 @@ localStorage.setItem("productos", JSON.stringify(datosProducto));
 
 console.log(datosProducto);
 
-let acumulador = ``;
-datosProducto.forEach(producto => {
-    acumulador += `<div class="card" style="width: 16rem;">
-    <img src="${producto.imagen}" class="card-img-top mx-auto"  style="width: 15rem;" alt="...">
-    <div class="card-body">
-    <h2 class="card-title text-center">${producto.genero} ${producto.nombre}</h2>
-    <p class="card-text text-center">Realizado en: ${producto.descripcion}</p>
-    <h3 class="card-title text-center">$${producto.precio}</h3>
-    
-    </div>
-    <div class="card-footer">
-    <button class="btn badge-pill btn-secondary btnColor"><a onclick="agregarCarrito('${producto.nombre}')">Agregar</a></button>
-    </div>    
-    </div>`
-});
+creaCards();
+function creaCards(){
+    let acumulador = ``;
+    datosProducto.forEach(producto => {
+        acumulador += `<div class="card" style="width: 16rem;">
+        <img src="${producto.imagen}" class="card-img-top mx-auto"  style="width: 15rem;" alt="...">
+        <div class="card-body">
+        <h2 class="card-title text-center">${producto.genero} ${producto.nombre}</h2>
+        <p class="card-text text-center">Realizado en: ${producto.descripcion}</p>
+        <h3 class="card-title text-center">$${producto.precio}</h3>
+        </div>
+        <div class="card-footer">
+        <button class="btn badge-pill btn-secondary btnColor"><a onclick="agregarCarrito('${producto.nombre}')">Agregar</a></button>
+        </div>    
+        </div>`
+    });
+    document.getElementById("datosProducto").innerHTML = acumulador;
+}
 
-document.getElementById("datosProducto").innerHTML = acumulador;
 
 function agregarCarrito(nombre){
     let agregar = datosProducto.find(producto => producto.nombre === nombre);
@@ -56,38 +58,50 @@ function agregarCarrito(nombre){
         alert("No se pudo agregar");
     }
     localStorage.carrito = JSON.stringify(carrito);
-    document.getElementById('actualiza').innerHTML = carrito.length;
+    document.getElementById('contador-carrito').innerHTML = carrito.length;
 }
 
+
+modalCarrito();
+function modalCarrito(){
 let agregados = ``;
 carrito.forEach(item => {
     agregados += 
     `<div class="row g-0 id="${item.nombre}">
-      <div class="col-md-4">
+    <div class="col-md-4">
         <img src="${item.imagen}" class="img-fluid rounded-start" alt="...">
-      </div>
-      <div class="col-md-8">
+    </div>
+    <div class="col-md-8">
         <div class="card-body">
-          <h4 class="card-title">${item.genero} ${item.nombre}</h4>
-          <h5 class="card-text">$${item.precio}</h5>
-          <button class="btn badge-pill btn-secondary btnColor" onclick="quitardelCarrito(${item.nombre})">Borrar</button>
+        <h4 class="card-title">${item.genero} ${item.nombre}</h4>
+        <h5 class="card-text">$${item.precio}</h5>
+        <button class="btn badge-pill btn-secondary btnColor" onclick="quitardelCarrito('${item.nombre}')">Borrar</button>
         </div>
-      </div>
+    </div>
     </div>`
     let Total = document.getElementById("total");
     let valorFinal = item.precio;
     totalSuma = totalSuma + valorFinal;
     Total.textContent = `Total: $${totalSuma}`;
 });
-
 document.getElementById("carrito").innerHTML = agregados;
-
-function quitardelCarrito(nombre){
-    let borrar = document.getElementById(nombre);
-    borrar.parentNode.removeChild(borrar);
 }
 
-//ordena los productos de manera ascendentes, por precio
+function quitardelCarrito(nombre){
+    const productoEncontrado = carrito.filter(producto => producto.nombre != nombre);
+    if (productoEncontrado.length > 0 ){
+        carrito =  productoEncontrado
+    }else{
+        carrito = []
+    }
+    
+    localStorage.carrito = JSON.stringify(carrito);
+    document.getElementById("carrito").innerHTML = carrito.length;
+    modalCarrito();
+    //location.reload();
+}
+
+//ordena los productos por precio de manera ascendente
 function orden (a, b){
     if (a.precio < b.precio){
         return -1;
@@ -101,78 +115,3 @@ for (const producto of datosProducto) {
     producto.aplicarDescuento();
 }
 console.log(datosProducto);
-
-//implementacion jQuery
-let nombre = $('nombre').val();
-let edad = $('edad').val();
-let email = $('email').val();
-let password = $('password').val();
-
-function validaEdad(event){
-    let age = event.target.value;
-    if (age < 18){
-        console.log("Para comprar tiene que ser mayor de edad");
-        age = undefined;
-        document.getElementById('edad').style.border = "2px solid red";
-    } else {
-        console.log("Puede comprar");
-        document.getElementById('edad').style.border = "2px solid green";
-    }
-}
-
-function validaPass(event){
-    let pass = event.target.value;
-    if (pass.length < 6){
-        console.log("Su contraseña tiene que contener como mínimo 6 caracteres");
-        pass = undefined;
-        document.getElementById('password').style.border = "2px solid red";
-    } else {
-        console.log("Contraseña válida");
-        document.getElementById('password').style.border = "2px solid green";
-    }
-}
-//implemetacion jQuery
-$('#edad').on('input', validaEdad);
-$('#password').on('input', validaPass);
-
-function enviar(event){
-    event.preventDefault();
-    const formu = {
-        'nombre': nombre,
-        'edad': edad,
-        'email': email,
-        'password': password
-    };
-    console.log(formu);
-    console.log(JSON.stringify(formu));
-}
-const miformulario = document.getElementById('formulario');
-miformulario.addEventListener('submit', enviar);
-
-//implementacion AJAX
-
-const dataMP = carrito.map(item => {
-    return {
-        "title": item.nombre,
-        "description": item.genero,
-        "picture_url": item.imagen,
-        "category_id": item.descripcion,
-        "quantity": 1,
-        "currency_id": "ARS",
-        "unit_price": item.precio,
-    }
-});
-
-const data = {
-    "items": dataMP,
-};
-
-let url = "https://api.mercadopago.com/checkout/preferences";
-fetch(url,{
-    method: 'POST',
-    headers: {
-        'Authorization': ' Bearer TEST-4692169109702316-093019-03da479ce0be2945870f3c52964852b2-25169801',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-});

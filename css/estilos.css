@@ -3,20 +3,50 @@
     padding: 0;
 }
 body{
-    background-color: rgb(46, 46, 46);
+    background-color: rgb(198, 192, 192);
 }
-.titulo{
-    font-family: Arial, Helvetica, sans-serif;
-    font-style: oblique;
-    color: rgb(191, 191, 230);
-    text-align: center;
+
+#header .bgColor {
+    background-color: rgb(0, 0, 0);
+}
+
+#header .logo {
+    height: 65px;
+    padding-left: 10px;
+    margin-left: 40px;
+}
+
+.btnCart {
+    border-color: black;
+    
+    font-size: 1.1rem;
+    margin: auto;
+    
+}
+
+.btnCarrito {
+    display: flex;
+    align-items: center;
+}
+
+.cartLogo {
+    height: 36px;
+    padding-right: 8px;
 }
 .btnColor{
     color: black;
     background-color: white;
     border-color: black;
 }
-  
+
+#contador-carrito {
+    font-size: 1.2rem;
+    background-color: black;
+    padding: 0;
+    top: 1px;
+    left: 3px;
+}
+
 .btnColor:hover{
     color: #fff;
     background-color: #000;
@@ -24,7 +54,7 @@ body{
 }
 
 .colorForm{
-    color: #fff;
+    color: rgb(43, 28, 28);
     width: 100px;
 }
 
@@ -34,6 +64,7 @@ body{
 }
 .bloque{
     margin: auto;
+    padding: 150px 0 50px 0;
 }
 .col-lg-4{
     width: auto;
